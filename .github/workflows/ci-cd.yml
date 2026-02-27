@@ -21,7 +21,7 @@ jobs:
 
       - name: Build Backend Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/spring-backend:latest ./backend
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/spring-backend:latest ./springboot
 
       - name: Push Backend Docker Image
         run: |
@@ -29,7 +29,7 @@ jobs:
 
       - name: Build Frontend Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/angular-frontend:latest ./frontend
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/angular-frontend:latest ./angular-app
 
       - name: Push Frontend Docker Image
         run: |
