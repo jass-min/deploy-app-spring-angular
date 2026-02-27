@@ -45,19 +45,7 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/angular-frontend:latest
           
-      - name: Test application with Docker Compose
+      - name: Check backend inside container
         run: |
-          # Installer docker-compose (si besoin)
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
-
-          # Lancer les conteneurs
-          docker-compose -f docker-compose.yml up -d
-
-          # Vérifier que les conteneurs sont en running
-          docker ps
-
-      - name: Check backend health
-        run: |
-          sleep 10  # attendre que les conteneurs démarrent
-          curl -f http://localhost:8081/actuator/health
+          CONTAINER_ID=$(docker ps -qf "name=spring-boot-app")
+          docker exec $CONTAINER_ID curl -f http://localhost:8081/actuator/health
