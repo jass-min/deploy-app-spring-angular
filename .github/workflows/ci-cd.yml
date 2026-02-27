@@ -34,3 +34,4 @@ jobs:
       - name: Push Frontend Docker Image
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/angular-frontend:latest
+# trigger new run
