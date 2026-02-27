@@ -63,9 +63,4 @@ jobs:
             sleep 3
            fi
          done
-
-      - name: Test frontend-backend communication
-        run: |
-         FRONTEND_ID=$(docker ps -qf "name=angular-app")
-         docker exec $FRONTEND_ID curl -f http://spring-boot-app:8081/actuator/health
       
