@@ -50,8 +50,17 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y docker-compose
           docker-compose -f docker-compose.yml up -d
-          
-      - name: Check backend inside container
+
+      - name: Wait for backend to be ready
         run: |
-          CONTAINER_ID=$(docker ps -qf "name=spring-boot-app")
-          docker exec $CONTAINER_ID curl -f http://localhost:8081/actuator/health
+         CONTAINER_ID=$(docker ps -qf "name=spring-boot-app")
+         for i in {1..20}; do
+           if docker exec $CONTAINER_ID curl -f http://localhost:8081/actuator/health; then
+             echo "Backend is ready!"
+             break
+           else
+            echo "Waiting for backend..."
+            sleep 3
+           fi
+         done
+      
