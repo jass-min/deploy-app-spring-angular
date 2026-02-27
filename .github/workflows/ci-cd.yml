@@ -44,4 +44,20 @@ jobs:
       - name: Push Frontend Docker Image
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/angular-frontend:latest
-# trigger new run
+          
+      - name: Test application with Docker Compose
+        run: |
+          # Installer docker-compose (si besoin)
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+          # Lancer les conteneurs
+          docker-compose -f docker-compose.yml up -d
+
+          # Vérifier que les conteneurs sont en running
+          docker ps
+
+      - name: Check backend health
+        run: |
+          sleep 10  # attendre que les conteneurs démarrent
+          curl -f http://localhost:8081/actuator/health
